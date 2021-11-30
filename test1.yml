@@ -1,0 +1,28 @@
+version: '3.3'
+services:
+  hc:
+    image: registry.ebbaba.com/test:1
+    ports:
+      - 9401:9401
+    environment:
+      - "APPENV=prod"
+      - "REDIS_HOST=test_redis_1"
+      - "DB_HOST=47.106.189.132"
+      - "DB_DATABASE=manydads_test"
+      - "DB_USERNAME=manydads_test"
+      - "DB_PASSWORD=wTZ6k5FE6hNZ8Ybd"
+    networks:
+      - hc-net
+  redis:
+    image: redis:6.0.10
+    volumes:
+      - /www/wwwroot/test/redis/data:/data
+      - /www/wwwroot/test/redis/redis.conf:/usr/local/etc/redis/redis.conf
+      - /www/wwwroot/test/redis/logs:/logs
+    ports:
+      - 6378:6379
+    networks:
+      - hc-net
+networks:
+  hc-net:
+    external: true
